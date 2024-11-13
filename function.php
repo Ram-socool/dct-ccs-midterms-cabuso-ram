@@ -3,11 +3,11 @@ session_start();
 
 function getUsers() {
     return [
-        ['email' => 'user1@email.com', 'password' => 'password1'],
-        ['email' => 'user2@email.com', 'password' => 'password2'],
-        ['email' => 'user3@email.com', 'password' => 'password3'],
-        ['email' => 'user4@email.com', 'password' => 'password4'],
-        ['email' => 'user5@email.com', 'password' => 'password5'],
+        ['email' => 'user1@email.com', 'password' => 'password'],
+        ['email' => 'user2@email.com', 'password' => 'password'],
+        ['email' => 'user3@email.com', 'password' => 'password'],
+        ['email' => 'user4@email.com', 'password' => 'password'],
+        ['email' => 'user5@email.com', 'password' => 'password'],
     ];
 }
 function deleteStudent($id) {
@@ -57,31 +57,16 @@ function updateStudent($id, $name, $email) {
 
 function validateLoginCredentials($email, $password) {
     $errors = [];
-
-    // Check if both fields are empty
-    if (empty($email) && empty($password)) {
-        $errors[] = "Email and password are required.";
-    } 
-    // Check if email is invalid and password is empty
-    elseif (!empty($email) && !filter_var($email, FILTER_VALIDATE_EMAIL) && empty($password)) {
-        $errors[] = "Invalid email. Password is required.";
-    } 
-    // Check if email is invalid (but password is provided)
-    elseif (!empty($email) && !filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $errors[] = "Invalid email format.";
-    } 
-    // Check if email is empty (and password is provided)
-    elseif (empty($email)) {
+    if (empty($email)) {
         $errors[] = "Email is required.";
-    } 
-    // Check if only the password is empty
-    elseif (empty($password)) {
+    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $errors[] = "Invalid email format.";
+    }
+    if (empty($password)) {
         $errors[] = "Password is required.";
     }
-
     return $errors;
 }
-
 function getSubjectById($id) {
     // Fetch subject by ID from the database or data source
 }
